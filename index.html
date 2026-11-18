@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08140f">
+  <meta name="description" content="JV — A little world of your own.">
+  <title>JV — A World of Your Own</title>
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+   <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#07130d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="JV">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
+<body>
+
+  <!-- APP LOADING -->
+  <div id="appLoader" class="app-loader">
+    <div class="loader-logo">JV</div>
+    <p>Entering your little world...</p>
+  </div>
+
+  <!-- LOGIN -->
+  <section id="authScreen" class="auth-screen hidden">
+    <div class="auth-card glass">
+      <div class="brand-mark">JV</div>
+      <h1>Welcome to JV</h1>
+      <p>A little world of your own.</p>
+
+      <div class="auth-tabs">
+        <button id="loginTab" class="active">Log in</button>
+        <button id="signupTab">Create account</button>
+      </div>
+
+      <form id="authForm">
+        <label for="authEmail">Email address</label>
+        <input
+          id="authEmail"
+          type="email"
+          placeholder="Your Gmail address"
+          autocomplete="email"
+          required
+        >
+
+        <label for="authPassword">Password</label>
+        <input
+          id="authPassword"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" class="primary-btn" id="authSubmit">
+          Enter JV
+        </button>
+      </form>
+
+      <p id="authMessage" class="auth-message"></p>
+      <p class="auth-note">Your private space, your own little universe.</p>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION -->
+  <main id="mainApp" class="main-app hidden">
+
+    <!-- HEADER -->
+    <header class="topbar glass">
+      <div class="brand">
+        <span class="brand-symbol">JV</span>
+        <span class="brand-name">JV</span>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="searchToggle" aria-label="Search">⌕</button>
+        <button id="notificationButton" aria-label="Notifications">♧</button>
+        <button id="profileShortcut" aria-label="My profile">◉</button>
+      </div>
+    </header>
+
+    <!-- SEARCH -->
+    <section id="searchPanel" class="search-panel hidden">
+      <input id="globalSearch" type="search"
+        placeholder="Search your little world...">
+      <div id="searchResults"></div>
+    </section>
+
+    <!-- HOME -->
+    <section id="homePage" class="page active">
+
+      <!-- PROFILE -->
+      <section class="profile-card glass">
+
+        <div class="profile-cover">
+          <span class="cover-decoration">✦</span>
+        </div>
+
+        <div class="profile-main">
+
+          <div class="avatar-wrapper">
+            <img
+              id="profilePicture"
+              src="./icons/icon-192.png"
+              alt="ANJI profile picture"
+            >
+
+            <label for="profilePictureInput"
+              class="avatar-edit"
+              title="Change profile picture">
+              ✎
+            </label>
+
+            <input
+              id="profilePictureInput"
+              type="file"
+              accept="image/*"
+              hidden
+            >
+          </div>
+
+          <div class="profile-identity">
+            <h1 id="profileName">
+              ANJI <span class="verified-badge">✓</span>
+            </h1>
+            <p id="profileBio">hi hi hi :;</p>
+            <button id="editProfileButton" class="text-btn">
+              Edit profile
+            </button>
+          </div>
+
+          <div class="profile-stats">
+            <div>
+              <strong id="followerCount">12M</strong>
+              <span>Followers</span>
+            </div>
+            <div>
+              <strong id="followingCount">1.2K</strong>
+              <span>Following</span>
+            </div>
+            <div>
+              <strong id="heartCount">9.8M</strong>
+              <span>Hearts</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PROFILE EDITOR -->
+      <section id="profileEditor" class="modal hidden">
+        <div class="modal-card glass">
+          <button class="modal-close" data-close="profileEditor">×</button>
+          <h2>Edit profile</h2>
+
+          <label for="editName">Display name</label>
+          <input id="editName" type="text" maxlength="30">
+
+          <label for="editBio">Bio</label>
+          <textarea id="editBio" maxlength="160"></textarea>
+
+          <button id="saveProfileButton" class="primary-btn">
+            Save changes
+          </button>
+        </div>
+      </section>
+
+      <!-- STORIES / HIGHLIGHTS -->
+      <section class="highlights-section">
+        <div class="section-heading">
+          <h2>My highlights</h2>
+          <button id="addHighlightButton">＋</button>
+        </div>
+        <div id="highlightsContainer" class="highlights-list">
+          <p class="empty-message">Your memories will appear here.</p>
+        </div>
+      </section>
+
+      <!-- CREATE POST -->
+      <section class="create-post glass">
+        <div class="create-post-header">
+          <img src="./icons/icon-192.png" alt="" class="mini-avatar">
+          <button id="openCreatePost" class="create-placeholder">
+            What's on your mind, Anji?
+          </button>
+        </div>
+
+        <div class="create-post-actions">
+          <button id="quickPhotoButton">▧ Photo</button>
+          <button id="quickVideoButton">▷ Video</button>
+          <button id="quickWriteButton">✎ Write</button>
+        </div>
+      </section>
+
+      <!-- FEED -->
+      <section class="feed-section">
+        <div class="section-heading">
+          <h2>Your feed</h2>
+          <button id="feedFilterButton">Latest⌄</button>
+        </div>
+
+        <div id="feedContainer" class="feed-container">
+          <div class="empty-feed glass">
+            <span>✧</span>
+            <h3>Your world starts here.</h3>
+            <p>Every picture, thought, and memory has a place.</p>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ANIME ZONE -->
+    <section id="animePage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">🎀</span>
+        <h1>Anime Zone</h1>
+        <p>Your anime universe.</p>
+      </div>
+
+      <div class="section-actions">
+        <button id="addAnimeList">＋ New collection</button>
+      </div>
+
+      <input id="animeSearch" type="search"
+        placeholder="Find an anime...">
+
+      <div id="animeCollections" class="collection-grid"></div>
+    </section>
+
+    <!-- MANGA ZONE -->
+    <section id="mangaPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">☘</span>
+        <h1>Manga & Manhwa</h1>
+        <p>Stories worth keeping.</p>
+      </div>
+
+      <div class="section-actions">
+        <button id="addMangaList">＋ New collection</button>
+      </div>
+
+      <input id="mangaSearch" type="search"
+        placeholder="Search your library...">
+
+      <div id="mangaCollections" class="collection-grid"></div>
+    </section>
+
+    <!-- MUSIC ROOM -->
+    <section id="musicPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">♫</span>
+        <h1>Music Room</h1>
+        <p>Every sound has a memory.</p>
+      </div>
+
+      <div class="music-player glass">
+        <div id="musicArtwork" class="music-artwork">♫</div>
+        <h2 id="musicTitle">Nothing playing</h2>
+        <p id="musicArtist">Choose something from your library.</p>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <div class="player-controls">
+          <button id="previousTrack">|◀</button>
+          <button id="playPauseButton">▶</button>
+          <button id="nextTrack">▶|</button>
+        </div>
+      </div>
+
+      <div class="section-actions">
+        <button id="uploadMusicButton">＋ Add audio</button>
+        <button id="createPlaylistButton">＋ Playlist</button>
+      </div>
+
+      <input id="musicUpload" type="file"
+        accept="audio/*" multiple hidden>
+
+      <div id="playlistContainer"></div>
+      <div id="musicLibrary"></div>
+    </section>
+
+    <!-- STORIES -->
+    <section id="storiesPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">▤</span>
+        <h1>My Stories</h1>
+        <p>Worlds written by me.</p>
+      </div>
+
+      <button id="createStoryButton" class="primary-btn">
+        ＋ Create a story
+      </button>
+
+      <div id="storyLibrary" class="collection-grid"></div>
+    </section>
+
+    <!-- WRITING ROOM -->
+    <section id="writingPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">✎</span>
+        <h1>Writing Room</h1>
+        <p>Poems, lyrics, and little thoughts.</p>
+      </div>
+
+      <button id="createWritingButton" class="primary-btn">
+        ＋ Write something
+      </button>
+
+      <div id="writingLibrary"></div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="notesPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">▧</span>
+        <h1>Reflection Notes</h1>
+        <p>A quiet place for your thoughts.</p>
+      </div>
+
+      <button id="createNoteButton" class="primary-btn">
+        ＋ New note
+      </button>
+
+      <div id="notesLibrary" class="collection-grid"></div>
+    </section>
+
+    <!-- GAMING -->
+    <section id="gamingPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">🎮</span>
+        <h1>Gaming Gallery</h1>
+        <p>Moments from your games.</p>
+      </div>
+
+      <button id="uploadGamingButton" class="primary-btn">
+        ＋ Add gaming memories
+      </button>
+
+      <input id="gamingUpload" type="file"
+        accept="image/*,video/*" multiple hidden>
+
+      <div id="gamingGallery" class="media-grid"></div>
+    </section>
+
+    <!-- DRAFTS -->
+    <section id="draftsPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">▤</span>
+        <h1>Drafts</h1>
+        <p>Things waiting to be finished.</p>
+      </div>
+      <div id="draftLibrary"></div>
+    </section>
+
+    <!-- GENERAL COLLECTIONS -->
+    <section id="collectionsPage" class="page hidden">
+      <div class="page-heading">
+        <span class="page-icon">❀</span>
+        <h1>My Collections</h1>
+        <p>Everything I choose to keep.</p>
+      </div>
+
+      <button id="createCollectionButton" class="primary-btn">
+        ＋ Create collection
+      </button>
+
+      <div id="generalCollections" class="collection-grid"></div>
+    </section>
+
+    <!-- CREATE MENU -->
+    <div id="createMenu" class="bottom-sheet hidden">
+      <div class="sheet-card glass">
+        <div class="sheet-handle"></div>
+        <div class="section-heading">
+          <h2>Create something</h2>
+          <button data-close="createMenu">×</button>
+        </div>
+
+        <div class="create-options">
+          <button data-create="post">▧<span>Post</span></button>
+          <button data-create="anime">🎀<span>Anime list</span></button>
+          <button data-create="manga">☘<span>Manga list</span></button>
+          <button data-create="music">♫<span>Music</span></button>
+          <button data-create="story">▤<span>Story</span></button>
+          <button data-create="writing">✎<span>Poem / Lyrics</span></button>
+          <button data-create="note">▧<span>Note</span></button>
+          <button data-create="gaming">🎮<span>Gaming</span></button>
+          <button data-create="collection">❀<span>Collection</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST EDITOR -->
+    <section id="postEditor" class="modal hidden">
+      <div class="modal-card glass">
+        <button class="modal-close" data-close="postEditor">×</button>
+        <h2>Create post</h2>
+
+        <textarea id="postCaption"
+          placeholder="Write something..."></textarea>
+
+        <div class="upload-preview" id="postPreview"></div>
+
+        <label class="upload-button">
+          ▧ Add pictures or videos
+          <input id="postMediaInput" type="file"
+            accept="image/*,video/*" multiple hidden>
+        </label>
+
+        <div class="editor-actions">
+          <button id="savePostDraft">Save draft</button>
+          <button id="publishPost" class="primary-btn">
+            Publish post
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMENT / POST DETAIL -->
+    <section id="detailModal" class="modal hidden">
+      <div class="modal-card glass detail-card">
+        <button class="modal-close" data-close="detailModal">×</button>
+        <div id="detailContent"></div>
+
+        <div id="commentArea">
+          <h3>Comments</h3>
+          <div id="commentList"></div>
+
+          <form id="commentForm">
+            <input id="commentInput" type="text"
+              placeholder="Write a comment..." required>
+            <button type="submit">➤</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNIVERSAL EDITOR -->
+    <section id="universalEditor" class="modal hidden">
+      <div class="modal-card glass">
+        <button class="modal-close" data-close="universalEditor">×</button>
+        <h2 id="universalEditorTitle">Create</h2>
+
+        <input id="universalTitle" type="text"
+          placeholder="Give it a title">
+
+        <textarea id="universalContent"
+          placeholder="Start writing..."></textarea>
+
+        <input id="universalCover" type="file"
+          accept="image/*">
+
+        <div class="editor-actions">
+          <button id="saveUniversalDraft">Save draft</button>
+          <button id="saveUniversal" class="primary-btn">Save</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav glass">
+      <button class="nav-item active" data-page="homePage">
+        <span>⌂</span><small>Home</small>
+      </button>
+
+      <button class="nav-item" data-page="animePage">
+        <span>🎀</span><small>Anime</small>
+      </button>
+
+      <button class="nav-item create-nav" id="createButton">
+        <span>＋</span>
+      </button>
+
+      <button class="nav-item" data-page="mangaPage">
+        <span>☘</span><small>Manga</small>
+      </button>
+
+      <button class="nav-item" data-page="musicPage">
+        <span>♫</span><small>Music</small>
+      </button>
+    </nav>
+
+  </main>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JAVASCRIPT -->
+  <script src="./Jv.js" defer></script>
+
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js")
+        .then(() => console.log("JV Service Worker registered!"))
+        .catch((error) => console.error("Service Worker error:", error));
+    });
+  }
+</script>
+
+</body>
+</html>
